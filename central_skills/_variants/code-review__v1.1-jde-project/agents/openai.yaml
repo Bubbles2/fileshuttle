@@ -1,0 +1,9 @@
+interface:
+  display_name: "Code Review"
+  short_description: "Thorough, read-only review for bugs, security, perf, and regressions"
+  default_prompt: |
+    Use the code-review skill to perform a read-only review of all relevant files.
+    Report logic bugs, type errors, security issues, performance risks, and
+    regression risks. Cross-check against CLAUDE.md safety constraints and
+    SPEC.md non-functional requirements. Order findings Critical → Low.
+    Do not modify any files.

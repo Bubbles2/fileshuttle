@@ -1,0 +1,192 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/plus-jakarta-sans';
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/500.css';
+
+/*
+ * Design tokens taken from the FileShuttle Claude Design.
+ * Every colour, radius, shadow and type size used by components lives here.
+ */
+@theme {
+  --font-sans: 'Plus Jakarta Sans Variable', 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Mono', monospace;
+
+  /* One step larger than the design, on request. */
+  --text-caption: 13px;
+  --text-meta: 14px;
+  --text-label: 15px;
+  --text-body: 16px;
+  --text-lead: 17px;
+  --text-title-sm: 18px;
+  --text-brand: 20px;
+  --text-title: 21px;
+
+  /* Light blue page with a white header; the white cards sit on it. */
+  --color-canvas: #dbeafe;
+  --color-chrome: #ffffff;
+  --color-chrome-line: #bfdbfe;
+
+  --color-surface: #ffffff;
+  --color-surface-subtle: #f8fafc;
+  --color-chip: #eef2f7;
+
+  /* Black text on request; secondary text stays near-black so it still reads as black. */
+  --color-ink: #000000;
+  --color-ink-soft: #111827;
+  --color-muted: #1f2937;
+  --color-faint: #374151;
+  /* Placeholders stay grey so they can't be mistaken for typed values (4.8:1 on white). */
+  --color-placeholder: #6b7280;
+  --color-grip: #94a3b8;
+
+  --color-line: #e3e8f2;
+  --color-line-strong: #d5dbe8;
+  --color-line-dashed: #c9d1e3;
+
+  --color-accent: #3d5afe;
+  --color-accent-strong: #2a3fc4;
+  --color-accent-soft: #eef1ff;
+
+  --color-folder: #b54708;
+  --color-folder-soft: #fff4e5;
+
+  --color-success: #067a55;
+  --color-success-soft: #e7f6ef;
+  --color-success-line: #b5e3cf;
+  --color-success-border: #8fd3b6;
+  --color-success-ink: #054d36;
+  --color-success-ink-soft: #065f44;
+
+  --color-warning-bg: #fff8f0;
+  --color-warning-line: #f7d9b8;
+  --color-warning-soft: #fdead3;
+  --color-warning-ink: #93370d;
+  --color-warning-path: #8a4b10;
+
+  --color-danger-soft: #fee4e2;
+  --color-danger-line: #f6c9c5;
+  --color-danger-ink: #b42318;
+
+  --radius-tile: 10px;
+  --radius-logo: 11px;
+  --radius-control: 12px;
+  --radius-row: 14px;
+  --radius-panel: 16px;
+  --radius-card: 20px;
+
+  --shadow-row: 0 1px 2px rgb(14 21 37 / 0.04);
+  --shadow-lifted: 0 2px 6px rgb(14 21 37 / 0.05);
+  --shadow-row-hover: 0 4px 12px rgb(14 21 37 / 0.08);
+  --shadow-segment: 0 1px 3px rgb(14 21 37 / 0.12);
+  --shadow-cta: 0 6px 16px rgb(61 90 254 / 0.25);
+  --shadow-card: 0 1px 2px rgb(15 23 42 / 0.06), 0 8px 24px rgb(30 64 175 / 0.12);
+
+  --animate-enter: enter 180ms ease-out both;
+
+  @keyframes enter {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+@layer base {
+  html {
+    background-color: var(--color-canvas);
+    scrollbar-color: #93c5fd var(--color-canvas);
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Solid accent (≈5:1 on white) rather than the design's 35% tint, to meet WCAG 1.4.11. */
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+}
+
+@utility focus-ring-within {
+  &:focus-within {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+}
+
+/* Guidance documents rendered from Markdown (see MarkdownContent). Headings arrive shifted down to h3–h6. */
+@layer components {
+  .markdown {
+    @apply max-w-[80ch] text-body text-ink;
+    line-height: 1.65;
+  }
+  .markdown > :first-child {
+    @apply mt-0;
+  }
+  .markdown h3 {
+    @apply mt-8 mb-3 text-title font-extrabold;
+  }
+  .markdown h4 {
+    @apply mt-7 mb-2 border-b border-line pb-1 text-title-sm font-bold;
+  }
+  .markdown h5 {
+    @apply mt-5 mb-2 text-lead font-bold;
+  }
+  .markdown h6 {
+    @apply mt-4 mb-1 text-body font-bold;
+  }
+  .markdown p {
+    @apply my-3;
+  }
+  .markdown ul {
+    @apply my-3 list-disc pl-6;
+  }
+  .markdown ol {
+    @apply my-3 list-decimal pl-6;
+  }
+  .markdown li {
+    @apply my-1;
+  }
+  .markdown a {
+    @apply font-semibold text-accent underline;
+  }
+  .markdown strong {
+    @apply font-bold;
+  }
+  .markdown code {
+    @apply rounded-md bg-chip px-1.5 py-0.5 font-mono text-[0.9em];
+  }
+  .markdown pre {
+    @apply my-4 overflow-x-auto rounded-control bg-ink p-4 text-white;
+  }
+  .markdown pre code {
+    @apply bg-transparent p-0 text-meta text-white;
+  }
+  .markdown blockquote {
+    @apply my-4 rounded-r-control border-l-4 border-accent bg-accent-soft px-4 py-2;
+  }
+  .markdown table {
+    @apply my-4 block max-w-full overflow-x-auto border-collapse text-meta;
+  }
+  .markdown th,
+  .markdown td {
+    @apply border border-line px-3 py-2 text-left align-top;
+  }
+  .markdown th {
+    @apply bg-chip font-bold;
+  }
+  .markdown hr {
+    @apply my-6 border-line;
+  }
+}
