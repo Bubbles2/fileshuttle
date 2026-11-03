@@ -1,4 +1,5 @@
 import type { ConflictPolicy } from '../../../../shared/api.ts';
+import type { Platform } from '../../../app/defaults';
 import { Button } from '../../../components/ui/Button';
 import { Panel } from '../../../components/ui/Panel';
 import { useFocusAfterRender } from '../../../hooks/useFocusAfterRender';
@@ -11,6 +12,7 @@ import { ConflictPolicyPicker } from './ConflictPolicyPicker';
 import { CopyButton } from './CopyButton';
 import { CopyResultBanner } from './CopyResultBanner';
 import { FolderField } from './FolderField';
+import { PlatformPicker } from './PlatformPicker';
 
 interface CopyOptionsCardProps {
   phase: CopyPhase;
@@ -26,12 +28,15 @@ interface CopyOptionsCardProps {
   /** Where each kind of item actually goes (destination plus its .claude / .agents / .codex subfolder). */
   targets: CopyTarget[];
   forClaude: boolean;
+  /** Windows keeps its folders; Mac fills in the Mac ones. */
+  platform: Platform;
   policy: ConflictPolicy;
   summary: CopySummary;
   canCopy: boolean;
   onSourceFolderChange: (value: string) => void;
   onDestinationChange: (value: string) => void;
   onForClaudeChange: (value: boolean) => void;
+  onPlatformChange: (value: Platform) => void;
   onPolicyChange: (value: ConflictPolicy) => void;
   onCopy: () => void;
   onStop: () => void;
@@ -69,6 +74,7 @@ export function CopyOptionsCard(props: CopyOptionsCardProps) {
   return (
     <Panel className="flex flex-col gap-4.5">
       <ClaudeToggle checked={props.forClaude} disabled={!idle} onChange={props.onForClaudeChange} />
+      <PlatformPicker value={props.platform} disabled={!idle} onChange={props.onPlatformChange} />
       {props.needsSourceFolder && (
         <FolderField
           label="Copy from folder"

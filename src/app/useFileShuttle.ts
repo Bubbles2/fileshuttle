@@ -10,10 +10,18 @@ import { summarizeProgress } from '../features/copy/utils/summarizeProgress';
 import { validateDestination } from '../features/copy/utils/validateDestination';
 import { useInventory } from '../features/inventory/hooks/useInventory';
 import type { InventoryItem, ItemType } from '../features/inventory/types';
-import { DEFAULT_DESTINATION_FOLDER, DEFAULT_FOR_CLAUDE } from './defaults';
+import {
+  DEFAULT_DESTINATION_FOLDER,
+  DEFAULT_FOR_CLAUDE,
+  DEFAULT_PLATFORM,
+  MAC_DESTINATION_FOLDER,
+  MAC_SOURCE_FOLDER,
+  type Platform,
+} from './defaults';
 import { progressSteps } from './progressSteps';
 
 const NO_ITEMS: InventoryItem[] = [];
+const MAC_FOLDERS = { source: MAC_SOURCE_FOLDER, destination: MAC_DESTINATION_FOLDER };
 
 /**
  * Wires the inventory, basket and copy job together and enforces the rules
@@ -24,11 +32,17 @@ export function useFileShuttle() {
   const inventory = useInventory();
   const basket = useBasket();
   const job = useCopyJob();
-  const [destination, setDestination] = useState(DEFAULT_DESTINATION_FOLDER);
+  const [windowsDestination, setWindowsDestination] = useState(DEFAULT_DESTINATION_FOLDER);
   const [policy, setPolicy] = useState<ConflictPolicy>('skip');
   const [forClaude, setForClaude] = useState(DEFAULT_FOR_CLAUDE);
   const [typeFilter, setTypeFilter] = useState<ItemType>('skill');
-  const [sourceFolder, setSourceFolder] = useSourceFolder();
+  const [windowsSourceFolder, setWindowsSourceFolder] = useSourceFolder();
+  // Mac gets its own folders, so switching back to Windows finds the Windows ones as they were.
+  const [platform, setPlatform] = useState<Platform>(DEFAULT_PLATFORM);
+  const [macFolders, setMacFolders] = useState(MAC_FOLDERS);
+  const onMac = platform === 'mac';
+  const sourceFolder = onMac ? macFolders.source : windowsSourceFolder;
+  const destination = onMac ? macFolders.destination : windowsDestination;
 
   const loaded = inventory.state.status === 'ready' ? inventory.state.inventory : null;
   const items = loaded?.items ?? NO_ITEMS;
@@ -149,11 +163,24 @@ export function useFileShuttle() {
       destinationError,
       targets,
       forClaude,
+      platform,
       policy,
       summary,
       canCopy: !locked && basketItems.length > 0 && destinationError === null && sourceFolderError === null,
-      onSourceFolderChange: setSourceFolder,
-      onDestinationChange: setDestination,
+      onSourceFolderChange: (value: string) => {
+        if (onMac) setMacFolders((folders) => ({ ...folders, source: value }));
+        else setWindowsSourceFolder(value);
+      },
+      onDestinationChange: (value: string) => {
+        if (onMac) setMacFolders((folders) => ({ ...folders, destination: value }));
+        else setWindowsDestination(value);
+      },
+      onPlatformChange: (next: Platform) => {
+        if (locked) return;
+        // Choosing Mac always starts from the Mac folders; Windows keeps whatever it had.
+        if (next === 'mac') setMacFolders(MAC_FOLDERS);
+        setPlatform(next);
+      },
       onForClaudeChange: (next: boolean) => {
         if (!locked) setForClaude(next);
       },

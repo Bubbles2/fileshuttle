@@ -584,6 +584,37 @@ ${row('docx', 'central_skills\\skills\\docx')}`));
     expect(localStorage.getItem('fileshuttle.sourceFolder')).toBe('C:\\AI_Donncha\\fileshuttle\\central_skills\\skills');
   });
 
+  it('fills in the Mac folders when Mac is chosen, and leaves the Windows folders as they were', async () => {
+    const server = stubServer({ kinds: {} });
+    const user = userEvent.setup();
+    const { container } = renderApp();
+    await user.upload(fileInput(container), csvFile(`${HEADER}\r\n${row('docx', 'central_skills\\skills\\docx')}`));
+    await user.click(await screen.findByRole('button', { name: 'Add docx to the basket' }));
+    await replaceText(user, screen.getByLabelText('Destination folder'), 'D:\\Out');
+    expect(screen.getByRole('radio', { name: 'Windows' })).toBeChecked();
+
+    await user.click(screen.getByRole('radio', { name: 'Mac' }));
+    expect(screen.getByLabelText('Copy from folder')).toHaveValue('/Users/dcfinlay/Development/AI/fileshuttle/central_skills/');
+    expect(screen.getByLabelText('Destination folder')).toHaveValue('/Users/dcfinlay/');
+    expect(screen.getByText('/Users/dcfinlay/.claude/skills')).toBeInTheDocument();
+    expect(localStorage.getItem('fileshuttle.sourceFolder')).toBeNull();
+
+    await user.click(screen.getByRole('radio', { name: 'Windows' }));
+    expect(screen.getByLabelText('Copy from folder')).toHaveValue('C:\\AI_Donncha\\fileshuttle\\');
+    expect(screen.getByLabelText('Destination folder')).toHaveValue('D:\\Out');
+
+    await user.click(screen.getByRole('radio', { name: 'Mac' }));
+    await user.click(screen.getByRole('button', { name: 'Copy 1 skill to destination' }));
+    expect(await screen.findByText('1 skill copied to')).toBeInTheDocument();
+    expect(server.copyRequests).toEqual([
+      {
+        source: '/Users/dcfinlay/Development/AI/fileshuttle/central_skills/skills/docx',
+        destination: '/Users/dcfinlay/.claude/skills',
+        policy: 'skip',
+      },
+    ]);
+  });
+
   it('lets keyboard users pick a conflict policy with the arrow keys', async () => {
     stubServer({ kinds: {} });
     const user = userEvent.setup();
