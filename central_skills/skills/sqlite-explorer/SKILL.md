@@ -25,7 +25,7 @@ You find a `sqlite-explorer.ts` script (which must be executed using Bun!) in [`
   `bun ${SKILL_DIR}/scripts/sqlite-explorer.ts ./path/to/db.sqlite --schema users`
 
 - Run any SQL query:
-  `bun sqlite-explorer.ts ./path/to/db.sqlite --query "SELECT * FROM users LIMIT 10"`
+  `bun ${SKILL_DIR}/scripts/sqlite-explorer.ts ./path/to/db.sqlite --query "SELECT * FROM users LIMIT 10"`
 
 - Run a write query (only when needed):
   `bun ${SKILL_DIR}/scripts/sqlite-explorer.ts ./path/to/db.sqlite --query "UPDATE users SET active=1 WHERE id=42"`

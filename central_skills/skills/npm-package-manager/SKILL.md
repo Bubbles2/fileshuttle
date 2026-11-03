@@ -11,7 +11,7 @@ Use this skill when the user asks to add, remove, update, audit, inspect, or tro
 
 1. Detect the package manager before acting.
    - If `package-lock.json` exists, use npm.
-   - If `pnpm-lock.yaml`, `yarn.lock`, or `bun.lockb` exists, stop and ask before using npm.
+   - If `pnpm-lock.yaml`, `yarn.lock`, `bun.lock`, or `bun.lockb` exists, stop and ask before using npm.
    - Do not mix package managers.
 
 2. Prefer safe, minimal changes.
@@ -82,3 +82,4 @@ npm ci
 npm audit --audit-level=high
 npm test
 npm run build
+```

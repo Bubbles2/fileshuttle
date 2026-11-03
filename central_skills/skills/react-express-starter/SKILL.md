@@ -1,13 +1,13 @@
 ---
 name: react-express-starter
-description: Bootstrap a new project that mirrors this React + Express + Sequelize + PostgreSQL stack. Use when the user wants to start a fresh project with the same conventions, or scaffold the JDE Demo ERP layout from scratch.
+description: Bootstrap a new project that mirrors this React + Express + Sequelize + PostgreSQL stack. Use when the user wants to start a fresh project with the same conventions (React 18 + Vite + Redux Toolkit/RTK Query client, Express 4 ESM server, Sequelize 6 + PostgreSQL, npm).
 version: 1.1.0
 last_updated: 2026-05-08
 ---
 
 # React + Express Starter
 
-This skill captures the **conventions** of the JDE Demo ERP repo so a new project can be bootstrapped with the same shape.
+This skill captures the **conventions** of our React + Express + Sequelize + PostgreSQL projects so a new project can be bootstrapped with the same shape.
 
 > Only invoke when starting a new project or recreating this layout. For day-to-day work in **this** repo, follow `CLAUDE.md` and `AGENTS.md` instead — they reflect the actual code.
 
@@ -119,7 +119,9 @@ This skill captures the **conventions** of the JDE Demo ERP repo so a new projec
 ## Bootstrap order
 
 1. `npm init -y`, set `"type": "module"`.
-2. Install deps (see `package.json` from JDE Demo ERP for the full list).
+2. Install deps:
+   - runtime: `npm i react react-dom @reduxjs/toolkit react-redux express sequelize pg concurrently`
+   - dev: `npm i -D vite @vitejs/plugin-react typescript @types/react @types/react-dom @types/express eslint prettier vitest jsdom @testing-library/react @playwright/test`
 3. Add `tsconfig.client.json` (strict, `jsx: "react-jsx"`, `moduleResolution: "Bundler"`) and `tsconfig.server.json` (NodeNext, `allowJs`, `checkJs: false`).
 4. Add `vite.config.js` with the `/api` proxy to the Express port.
 5. Add `eslint.config.js` (flat) with separate blocks for `src/**/*.{ts,tsx}`, `src/**/*.{js,jsx}`, and `server/**/*.js`.

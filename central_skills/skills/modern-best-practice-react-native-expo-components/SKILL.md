@@ -37,7 +37,6 @@ common best practices focused on clarity, correctness, and maintainability.
 - **AVOID** `useEffect()` for derived state or data fetching
   - See the ["You Might Not Need An Effect" guide](references/you-dont-need-useeffect.md)
   - **PREFER** deriving values during render instead of synchronizing state
-  - Fetch data via TanStack Query (`@tanstack/react-query`)
 - **AVOID** unnecessary `useState()` or `useReducer()` usage
   - Derive state from props or other state when possible
   - Localize state to the lowest possible component

@@ -1,13 +1,13 @@
 # central_skills
 
-One master copy of every skill (28) and every Claude Code sub-agent (9) found in `C:\AI_Donncha`, with everything each one needs to be dropped into a new project.
+One master copy of every skill (29) and every Claude Code sub-agent (9) found in `C:\AI_Donncha`, with everything each one needs to be dropped into a new project.
 
 ```
 central_skills/
 ├── README.md              ← this file
 ├── install-skills.ps1     ← copies skills into a project
 ├── install-skills.cmd     ← same, double-click friendly (bypasses PowerShell execution policy)
-├── skills/                ← the 28 skills, one folder each (SKILL.md + any references/scripts)
+├── skills/                ← the 29 skills, one folder each (SKILL.md + any references/scripts)
 ├── agents/                ← 9 Claude Code sub-agents (one .md file each)
 └── _variants/             ← alternative versions of skills and agents, kept for reference (not installed)
 ```
@@ -40,7 +40,7 @@ Or from `cmd`: `install-skills.cmd -ProjectPath C:\Dev\my-app -Bundle web`
 | Bundle | Skills |
 |---|---|
 | `core` | clean-typescript, web-security, code-review, npm-package-manager |
-| `web` | core + modern-best-practice-react-components, modern-accessible-html-jsx, modern-browser-apis, modern-tailwind, modern-best-practice-nextjs, vercel-react-best-practices |
+| `web` | core + modern-best-practice-react-components, modern-accessible-html-jsx, modern-browser-apis, modern-tailwind, modern-best-practice-nextjs, vercel-react-next-best-practices |
 | `mobile` | core + react-npm-compat, modern-best-practice-react-components, vercel-react-native-skills, modern-best-practice-react-native-expo-components |
 | `backend` | core + api-structure, backend-api-structure, react-express-starter, sqlite-explorer, better-auth-best-practices |
 | `all` | every skill |
@@ -86,35 +86,37 @@ Where versions differed, the kept copy is the newest **general-purpose** one. Ve
 | npm-package-manager | TS / JS tooling | testClaude/ArcMob | – |
 | bun-first | TS / JS tooling | codex/finished-codex-project | Bun |
 | react-npm-compat | TS / JS tooling | testClaude/ArcMob | – |
-| modern-best-practice-react-components | Frontend | codex/finished-codex-project | includes `references/` |
-| modern-react-components | Frontend | codex/jde/improvements (v1.1) | includes `references/` |
+| modern-best-practice-react-components | Frontend | codex/finished-codex-project | React 19+, data-library neutral; includes `references/` |
+| modern-react-components | Frontend | codex/jde/improvements (v1.1) | for Redux Toolkit + RTK Query projects; includes `references/` |
 | modern-accessible-html-jsx | Frontend | codex/finished-codex-project | – |
 | modern-browser-apis | Frontend | codex/finished-codex-project | – |
-| modern-tailwind | Frontend | codex/finished-codex-project | – |
-| modern-best-practice-nextjs | Frontend | codex/finished-codex-project | – |
-| vercel-react-best-practices | Frontend | testClaude/MyAgents/fitness-landing | includes `rules/` (68 files) |
-| vercel-react-native-skills | Mobile | testClaude/MyAgents/fitness-landing | includes `rules/` (38 files) |
-| modern-best-practice-react-native-expo-components | Mobile | testClaude/arcade-ged-prompted_experiment (was folder `aa`) | – |
-| api-structure | Backend | codex/jde/improvements (v1.1) | Express + Sequelize + PostgreSQL stack |
-| react-express-starter | Backend | codex/jde/improvements (v1.1) | Express + Sequelize + PostgreSQL stack |
-| backend-api-structure | Backend | testClaude/n8nProjects/chatbotn8n | – |
-| arcade-api | Backend | testClaude/ArcMob | Arcade API |
-| sqlite-explorer | Backend | codex/finished-codex-project | Bun (runs `scripts/sqlite-explorer.ts`) |
+| modern-tailwind | Frontend | codex/finished-codex-project | Tailwind v4 syntax (v3 fallback noted) |
+| modern-best-practice-nextjs | Frontend | codex/finished-codex-project | Next.js App Router only |
+| vercel-react-next-best-practices | Frontend | testClaude/MyAgents/fitness-landing | includes `rules/` (68 files); ~15 rules are Next.js-only, SKILL.md says which to skip in plain React |
+| vercel-react-native-skills | Mobile | testClaude/MyAgents/fitness-landing | React Native + **Expo**; includes `rules/` (38 files) |
+| react-native-cli-guidelines | Mobile | adapted from vercel-react-native-skills | **bare React Native CLI** (no Expo); includes `rules/` (38 files); not in a bundle |
+| modern-best-practice-react-native-expo-components | Mobile | testClaude/arcade-ged-prompted_experiment (was folder `aa`) | Expo Router; includes `references/` |
+| api-structure | Backend | codex/jde/improvements (rewritten generic, v2.0) | Express + Sequelize + PostgreSQL, ES modules; JDE original in `_variants` |
+| react-express-starter | Backend | codex/jde/improvements (v1.1, de-JDE'd) | React 18 + Vite + RTK Query / Express 4 ESM / Sequelize 6 + PostgreSQL, npm only |
+| backend-api-structure | Backend | testClaude/n8nProjects/chatbotn8n | Express, **CommonJS** style (api-structure is the ESM + Sequelize one) |
+| arcade-api | Backend | testClaude/ArcMob | Arcade HTTP API (Basic auth), axios |
+| sqlite-explorer | Backend | codex/finished-codex-project | **Bun** (runs `scripts/sqlite-explorer.ts`); conflicts with npm-only starter if both are followed literally |
 | web-security | Security | codex/finished-codex-project | – |
 | better-auth-best-practices | Security | codex/finished-codex-project | Better Auth |
 | code-review | Quality | codex/finished-codex-project | `agents/openai.yaml` is Codex UI metadata |
 | playwright-cli | Testing | testClaude/playwrightest/CreatePlaywrightTests | `npm install -g @playwright/cli@latest` |
-| cmd-dev-manage | Orchestration | testClaude/sub_agent_test | **needs `agents/` (frontend-ui-engineer, senior-code-reviewer, test-engineer)**, Claude Code only |
+| cmd-dev-manage | Orchestration | testClaude/sub_agent_test | **needs `agents/` (frontend-ui-engineer, senior-code-reviewer, test-engineer)**, Claude Code only, frontend tracks only (no backend agent) |
 | docx | Documents | testClaude/ArcMobWord | Python 3, `npm install -g docx`, pandoc / LibreOffice for some tasks |
 | digitech-design | Design | testClaude/ArcMobWord | ⚠️ **incomplete**, see below |
-| gemini-image-gen | AI | testClaude/MyAgents/fitness-landing | `pip install google-genai`, `GEMINI_API_KEY` |
-| linkedin-post | Content | Claude Masterclass Materials / Module 2 | refers to "Tweet Lab" data and "0 Finance" guidelines (course example) |
+| gemini-image-gen | AI | testClaude/MyAgents/fitness-landing | Python, `pip install google-genai`, `GEMINI_API_KEY`; script path is skill-relative |
+| linkedin-post | Content | Claude Masterclass Materials / Module 2 | course example: hardcoded Notion IDs, "Tweet Lab" data and "0 Finance" SEC wording — rewrite before real use |
 | paris-sport-hub-email-responder | Content | `paris-sport-hub-email-skill.skill` (unzipped) | Gmail connector; includes `references/store-info.md` |
 
 ## _variants (kept for reference, not installed)
 
 | Folder | Why it's separate |
 |---|---|
+| api-structure__v1.1-jde-project | Original JDE Demo ERP version: read-only views, `schemaTable()`, `JDE_SCHEMA`, `SPEC.md` §6.x, connection-tester pitfall |
 | clean-typescript__v1.1-jde-project | Longer v1.1 version; mentions `tsconfig.client.json`, RTK Query and `inventory-dashboard.tsx` from the JDE project |
 | web-security__v1.1-jde-project | Longer v1.1 version with a JDE "connection tester" project appendix |
 | modern-browser-apis__v1.1-dashboard-project | v1.1 with a "used in this dashboard project" section |
@@ -126,6 +128,8 @@ To use one of these instead, copy it into the project (`.claude\skills\` or `.cl
 
 ## Known gaps
 
+- **Conflicting conventions when skills are mixed**: `bun-first` vs `npm-package-manager`/`react-express-starter` (runtime), `api-structure` (ESM, Sequelize) vs `backend-api-structure` (CommonJS) vs the `backend-architect` agent (`{success,data}` envelope). Pick one per project.
+- **linkedin-post** and **paris-sport-hub-email-responder** are demos tied to specific Notion/Gmail data.
+
 - **digitech-design**: SKILL.md refers to `README.md`, `colors_and_type.css`, `assets/digitech-*.png`, `ui_kits/governance-console/` and `preview/*.html`. None of these exist anywhere in `C:\AI_Donncha`, so only SKILL.md is here. Add those files to `skills\digitech-design\` to make it complete.
-- **cmd-dev-manage** has no `name:` in its SKILL.md; Claude Code falls back to the folder name.
 - Skipped: older copies superseded by the kept ones, and the duplicate copies in `.claude/worktrees/` folders.

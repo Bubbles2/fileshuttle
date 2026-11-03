@@ -16,7 +16,7 @@ Assume hostile input and untrusted environments by default.
 
 ## XSS & Injection
 
-- **AVOID** `dangerouslySetInnerHTML` and raw HTML injection
+- **AVOID** raw HTML injection (`innerHTML`, React `dangerouslySetInnerHTML`, Vue `v-html`, template `{{{ }}}`)
 - Escape and encode dynamic content properly
 - Never interpolate untrusted data into HTML, CSS, or JS contexts
 - Ensure SQL injection protection

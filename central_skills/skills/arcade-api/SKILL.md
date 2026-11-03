@@ -1,5 +1,5 @@
 ---
-name:arcade_api
+name: arcade-api
 description: Create reusable JavaScript or TypeScript service modules that connect UI components to authenticated Arcade HTTP APIs.
 ---
 
@@ -80,6 +80,7 @@ export async function fetchStatus(user: string, password: string) {
   const data = await get<any>('/health/status', user, password);
   return data.ServerStatus;
 }
+```
 
 ## Rules
 Do not put raw API calls directly in UI components.

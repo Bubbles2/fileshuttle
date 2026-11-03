@@ -1,6 +1,6 @@
 ---
-name: vercel-react-best-practices
-description: React and Next.js performance optimization guidelines from Vercel Engineering. This skill should be used when writing, reviewing, or refactoring React/Next.js code to ensure optimal performance patterns. Triggers on tasks involving React components, Next.js pages, data fetching, bundle optimization, or performance improvements.
+name: vercel-react-next-best-practices
+description: React and Next.js performance optimization guidelines from Vercel Engineering (65 rules). Use when writing, reviewing, or refactoring React or Next.js code for performance. About a quarter of the rules are Next.js App Router only (server components, server actions, next/dynamic) and are skipped in plain React projects; see "Framework applicability" in the skill. Triggers on tasks involving React components, Next.js pages, data fetching, bundle optimization, or performance improvements.
 license: MIT
 metadata:
   author: vercel
@@ -10,6 +10,14 @@ metadata:
 # Vercel React Best Practices
 
 Comprehensive performance optimization guide for React and Next.js applications, maintained by Vercel. Contains 65 rules across 8 categories, prioritized by impact to guide automated refactoring and code generation.
+
+## Framework applicability
+
+Check `package.json` first.
+
+- **Next.js (App Router)**: every rule applies.
+- **Plain React (Vite, CRA, Remix, etc.)**: skip the rules that depend on Next.js or React Server Components — all `server-*` rules (RSC, `'use server'`, `after()`, `next/headers`, `next/og`, `React.cache`), `async-api-routes`, `bundle-dynamic-imports` (uses `next/dynamic`; use `React.lazy` instead), `bundle-defer-third-party` and `rendering-hydration-*` / `rendering-script-defer-async` where they assume Next's `<Script>` or SSR hydration.
+- **Data library**: `client-swr-dedup` is written for SWR. Apply the same deduplication idea with whatever the project already uses (TanStack Query, RTK Query) — do not add SWR to a project that has one of those.
 
 ## When to Apply
 

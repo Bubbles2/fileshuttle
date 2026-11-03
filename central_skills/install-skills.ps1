@@ -46,7 +46,7 @@ $AgentsDir = Join-Path $LibRoot 'agents'
 $Bundles = @{
     core    = @('clean-typescript', 'web-security', 'code-review', 'npm-package-manager')
     web     = @('modern-best-practice-react-components', 'modern-accessible-html-jsx', 'modern-browser-apis',
-                'modern-tailwind', 'modern-best-practice-nextjs', 'vercel-react-best-practices')
+                'modern-tailwind', 'modern-best-practice-nextjs', 'vercel-react-next-best-practices')
     mobile  = @('react-npm-compat', 'modern-best-practice-react-components', 'vercel-react-native-skills',
                 'modern-best-practice-react-native-expo-components')
     backend = @('api-structure', 'backend-api-structure', 'react-express-starter', 'sqlite-explorer',

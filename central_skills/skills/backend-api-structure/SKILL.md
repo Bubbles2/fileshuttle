@@ -1,8 +1,8 @@
 ---
 name: backend-api-structure
-description:Use this skill whenever creating, extending, or reorganizing a backend REST API.
-version: 1.0.0
-last_updated: 2026-06-16
+description: Use this skill whenever creating, extending, or reorganizing a backend REST API.
+version: 1.0.1
+last_updated: 2026-11-03
 ---
 
 Purpose
@@ -508,3 +508,49 @@ API keys
 external service URLs
 
 Database configuration should normally live under:
+
+src/config/db.js
+
+Example:
+
+const { Pool } = require("pg");
+
+const pool = new Pool({
+  host: process.env.DB_HOST,
+  port: Number(process.env.DB_PORT) || 5432,
+  database: process.env.DB_NAME,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+});
+
+module.exports = pool;
+
+Controllers and services import the shared connection from src/config/db.js; they never create their own connections.
+
+Keep a .env.example in the repository with placeholder values for every variable the server reads. Never commit a real .env.
+
+Entry Point
+
+Keep app.js (routes and middleware) separate from the file that starts listening, so the app can be imported by tests without opening a port.
+
+src/server.js
+
+const app = require("./app");
+
+const port = Number(process.env.PORT) || 3000;
+
+app.listen(port, () => {
+  console.log(`API listening on port ${port}`);
+});
+
+Checklist for a New Domain
+
+Given a new domain "books":
+
+1. Create src/api/books/index.js with the route definitions.
+2. Create src/api/books/booksController.js with index / get / create / update / remove (or the domain-specific actions).
+3. Add src/api/books/booksService.js only if the controller logic becomes substantial.
+4. Register the router in app.js: app.use("/api/books", booksApi).
+5. Wrap every handler in try/catch and forward errors with next(error).
+6. Read configuration from environment variables, never from hardcoded values.
+7. Confirm every endpoint can be found from its URL: /api/books/:id → src/api/books/index.js → booksController.get.

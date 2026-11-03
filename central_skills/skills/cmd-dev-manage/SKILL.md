@@ -1,4 +1,5 @@
 ---
+name: cmd-dev-manage
 description: Orchestrate implementation across parallel tracks using specialized agents. Coordinates frontend-ui-engineer, senior-code-reviewer, and optionally test-engineer agents.
 argument-hint: [test]
 ---

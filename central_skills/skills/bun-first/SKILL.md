@@ -12,7 +12,7 @@ Assume Bun is available unless explicitly stated otherwise.
 
 - **PREFER** Bun over Node.js, npm, pnpm, or yarn
 - **PREFER** Bun’s built-in features over third-party tools when available
-- **PRFER** Bun's native APIs (eg for file access, SQL, S3 etc) over Node.js APIs
+- **PREFER** Bun's native APIs (eg for file access, SQL, S3 etc) over Node.js APIs
 
 ## Package Management
 

@@ -1,11 +1,15 @@
 ---
 name: modern-tailwind
-description: Write clean, modern, concise Tailwind CSS code. Use whenever working on or reviewing Tailwind CSS code.
+description: Write clean, modern, concise Tailwind CSS v4 code (v3 fallbacks noted). Use whenever working on or reviewing Tailwind CSS code.
 ---
+
+# Check the Tailwind version first
+
+Look at `package.json`. The shorthand below needs **Tailwind CSS v4**; on v3 keep the `[var(--x)]` form.
 
 # Variables in arbitrary values
 
-When using variables in arbitrary values, use the modern, shorter syntax.
+When using variables in arbitrary values, use the modern, shorter syntax (v4).
 
 Instead of:
 

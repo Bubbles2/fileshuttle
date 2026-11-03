@@ -1,6 +1,6 @@
 ---
 name: modern-react-components
-description: Build clean, modern React 18+ components that avoid common pitfalls — unnecessary state, useEffect misuse, mirrored props, premature memoisation. Use when authoring or modifying React components.
+description: Build clean, modern React 18+ components that avoid common pitfalls — unnecessary state, useEffect misuse, mirrored props, premature memoisation. Written for projects that use Redux Toolkit + RTK Query for server state. Use when authoring or modifying React components in such a project.
 version: 1.1.0
 last_updated: 2026-05-08
 ---

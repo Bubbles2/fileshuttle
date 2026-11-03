@@ -31,10 +31,10 @@ Ask the user for (or infer from context):
 
 ### Step 2 — Build and run the generation script
 
-Use the script at `scripts/generate_image.py`. Run it like this:
+Use the script at `scripts/generate_image.py` inside this skill's folder (`${SKILL_DIR}` below means the directory containing this SKILL.md). Run it like this:
 
 ```bash
-python /c/Users/D.Finlay/.claude/skills/gemini-image-gen/scripts/generate_image.py \
+python ${SKILL_DIR}/scripts/generate_image.py \
   --prompt "your image description here" \
   --output-name "my_image" \
   --output-dir "./images"
@@ -43,7 +43,7 @@ python /c/Users/D.Finlay/.claude/skills/gemini-image-gen/scripts/generate_image.
 Or inline for quick use:
 
 ```bash
-python /c/Users/D.Finlay/.claude/skills/gemini-image-gen/scripts/generate_image.py \
+python ${SKILL_DIR}/scripts/generate_image.py \
   --prompt "a golden retriever puppy playing in autumn leaves, photorealistic"
 ```
 
